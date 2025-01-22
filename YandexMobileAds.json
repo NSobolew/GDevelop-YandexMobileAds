@@ -1,0 +1,426 @@
+{
+  "author": "",
+  "category": "",
+  "extensionNamespace": "",
+  "fullName": "YandexMobileAds",
+  "helpPath": "",
+  "iconUrl": "",
+  "name": "YandexMobileAds",
+  "previewIconUrl": "",
+  "shortDescription": "",
+  "version": "",
+  "description": [
+    "More information:",
+    "",
+    "https://www.npmjs.com/package/cordova-plugin-yandex-ads/v/2.2.1",
+    "https://partner.yandex.com/ https://partner.yandex.ru/",
+    ""
+  ],
+  "tags": [],
+  "authorIds": [
+    "6ANn6FmgsUVGG3Q6A6T11c0Yrl92"
+  ],
+  "dependencies": [
+    {
+      "exportName": "cordova-plugin-yandex-ads",
+      "name": "Cordova Yandex Mobile Ads",
+      "type": "cordova",
+      "version": "2.2.1"
+    }
+  ],
+  "globalVariables": [
+    {
+      "name": "isRewardActivatedExt",
+      "type": "boolean",
+      "value": false
+    }
+  ],
+  "sceneVariables": [],
+  "eventsFunctions": [
+    {
+      "description": "InitSDK",
+      "fullName": "InitSDK",
+      "functionType": "Action",
+      "group": "Initialization",
+      "name": "InitSDK",
+      "sentence": "InitSDK: rewardedBlockId: _PARAM1_ interstitialBlockId: _PARAM2_ bannerBlockId: _PARAM3_ openAppBlockId: _PARAM4_ bannerAtTop: _PARAM5_ bannerWidth: _PARAM6_ bannerHeight: _PARAM7_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "//BlocksIds",
+            "const rewardedBlockId = eventsFunctionContext.getArgument('rewardedBlockId');",
+            "const interstitialBlockId = eventsFunctionContext.getArgument('interstitialBlockId');",
+            "const bannerBlockId = eventsFunctionContext.getArgument('bannerBlockId');",
+            "const openAppBlockId = eventsFunctionContext.getArgument('openAppBlockId');",
+            "",
+            "//Banner Options",
+            "var bannerAtTop = eventsFunctionContext.getArgument('bannerAtTop');",
+            "var bannerWidth = eventsFunctionContext.getArgument('bannerWidth');",
+            "var bannerHeight = eventsFunctionContext.getArgument('bannerHeight');",
+            "",
+            "async function YaAdsInit() {",
+            "  await window.YandexAds.init({ ",
+            "  rewardedBlockId: rewardedBlockId,",
+            "  interstitialBlockId: interstitialBlockId,",
+            "  bannerBlockId: bannerBlockId,",
+            "  openAppBlockId: openAppBlockId, ",
+            "  //instreamBlockId: 'YOUR_INSTREAM_ID',",
+            "  //feedBlockId: 'YOUR_FEED_ID',",
+            "  options: { // This is for banner ads",
+            "    bannerAtTop: bannerAtTop, // Show banner on top of screen, otherwise on bottom",
+            "    bannerSize: { width: bannerWidth, height: bannerHeight }, // Your banner size",
+            "    // You can skip bannerSize option and width will be as big as possible",
+            "  },",
+            "});",
+            "};",
+            "YaAdsInit();",
+            "",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [],
+          "actions": []
+        }
+      ],
+      "parameters": [
+        {
+          "description": "RewardedBlockId (\"demo-rewarded-yandex\" for test)",
+          "name": "rewardedBlockId",
+          "supplementaryInformation": "scenebject::Text",
+          "type": "string"
+        },
+        {
+          "description": "TnterstitialBlockId (\"demo-interstitial-yandex\" for test)",
+          "name": "interstitialBlockId",
+          "type": "string"
+        },
+        {
+          "description": "BannerBlockId (\"demo-banner-yandex\" for test)",
+          "name": "bannerBlockId",
+          "type": "string"
+        },
+        {
+          "description": "OpenAppBlockId (\"demo-appopenad-yandex\" for test)",
+          "name": "openAppBlockId",
+          "type": "string"
+        },
+        {
+          "defaultValue": "False",
+          "description": "BannerAtTop (True: banner on top, false: banner bottom)",
+          "name": "bannerAtTop",
+          "optional": true,
+          "type": "trueorfalse"
+        },
+        {
+          "description": "BannerWidth (468 for default)",
+          "name": "bannerWidth",
+          "type": "expression"
+        },
+        {
+          "description": "BannerHeight (100 for default)",
+          "name": "bannerHeight",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Set user consent for GDPR. Call this on every app launch. More info: https://yandex.ru/dev/mobile-ads/doc/android/quick-start/gdpr-about.html",
+      "fullName": "Set user consent for GDPR",
+      "functionType": "Action",
+      "group": "Initialization",
+      "name": "setUserConsent",
+      "sentence": "Set user consent for GDPR: _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "var setUserConsent = eventsFunctionContext.getArgument('setUserConsent');\r",
+            "\r",
+            "window.YandexAds.setUserConsent(setUserConsent);"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "defaultValue": "True",
+          "description": "SetUserConsent",
+          "name": "setUserConsent",
+          "optional": true,
+          "type": "trueorfalse"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Load Banner",
+      "fullName": "Load Banner",
+      "functionType": "Action",
+      "group": "Banner",
+      "name": "LoadBanner",
+      "sentence": "Load Banner",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "window.YandexAds.loadBanner();",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Show Banner",
+      "fullName": "Show Banner",
+      "functionType": "Action",
+      "group": "Banner",
+      "name": "ShowBanner",
+      "sentence": "Show Banner",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "window.addEventListener(window.YandexAds.events.banner.loaded, async () => {\r",
+            "  await window.YandexAds.showBanner();\r",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Reload Banner",
+      "fullName": "Reload Banner",
+      "functionType": "Action",
+      "group": "Banner",
+      "name": "reloadBanner",
+      "sentence": "Reload Banner",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "window.YandexAds.reloadBanner();",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Hide Banner",
+      "fullName": "Hide Banner",
+      "functionType": "Action",
+      "group": "Banner",
+      "name": "hideBanner",
+      "sentence": "Hide Banner",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "window.YandexAds.hideBanner();",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Load Interstitial",
+      "fullName": "Load Interstitial",
+      "functionType": "Action",
+      "group": "Interstitial",
+      "name": "loadInterstitial",
+      "sentence": "Load Interstitial",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "window.YandexAds.loadInterstitial();",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Show Interstitial",
+      "fullName": "Show Interstitial",
+      "functionType": "Action",
+      "group": "Interstitial",
+      "name": "ShowInterstitial",
+      "sentence": "Show Interstitial",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "window.addEventListener(window.YandexAds.events.interstitial.loaded, async () => {\r",
+            "  await window.YandexAds.showInterstitial();\r",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Load Rewarded Video",
+      "fullName": "Load Rewarded Video",
+      "functionType": "Action",
+      "group": "RewardedVideo",
+      "name": "LoadRewardedVideo",
+      "sentence": "Load Rewarded Video",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "window.YandexAds.loadRewardedVideo();",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Show Rewarded Video",
+      "fullName": "Show Rewarded Video",
+      "functionType": "Action",
+      "group": "RewardedVideo",
+      "name": "ShowRewardedVideo",
+      "sentence": "Show Rewarded Video",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "var ira = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isRewardActivatedExt\");\r",
+            "ira.setBoolean(false);\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.rewarded.loaded, async () => {\r",
+            "  await window.YandexAds.showRewardedVideo();\r",
+            "});\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.rewarded.rewarded, async () => {\r",
+            "  await ira.setBoolean(true);\r",
+            "});\r",
+            "\r",
+            "\r",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "is Reward Activated",
+      "fullName": "is Reward Activated",
+      "functionType": "Condition",
+      "group": "RewardedVideo",
+      "name": "isRewardActivated",
+      "sentence": "is Reward Activated",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isRewardActivatedExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Load app open ads",
+      "fullName": "Load app open ads",
+      "functionType": "Action",
+      "group": "OpenAppAds",
+      "name": "loadOpenAppAds",
+      "sentence": "Load app open ads",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "window.YandexAds.loadOpenAppAds();",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Show app open ads",
+      "fullName": "Show app open ads",
+      "functionType": "Action",
+      "group": "OpenAppAds",
+      "name": "showOpenAppAds",
+      "sentence": "Show app open ads",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "window.addEventListener(window.YandexAds.events.openAppAds.loaded, async () => {\r",
+            "  await window.YandexAds.showOpenAppAds();\r",
+            "});"
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    }
+  ],
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}
