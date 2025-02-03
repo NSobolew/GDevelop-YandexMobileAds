@@ -1,19 +1,20 @@
 {
   "author": "",
-  "category": "",
+  "category": "Ads",
   "extensionNamespace": "",
   "fullName": "YandexMobileAds",
   "helpPath": "",
-  "iconUrl": "",
+  "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0ibWRpLWFscGhhLXktY2lyY2xlIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTksN0wxMSwxM1YxN0gxM1YxM0wxNSw3SDEzTDEyLDEwTDExLDdIOU0xMiwyQTEwLDEwIDAgMCwxIDIyLDEyQTEwLDEwIDAgMCwxIDEyLDIyQTEwLDEwIDAgMCwxIDIsMTJBMTAsMTAgMCAwLDEgMTIsMloiIC8+PC9zdmc+",
   "name": "YandexMobileAds",
-  "previewIconUrl": "",
+  "previewIconUrl": "https://asset-resources.gdevelop.io/public-resources/Icons/d767f43666b22704833086df6ea37c1737e7c53064168c6c8417d1d1dff6e674_alpha-y-circle.svg",
   "shortDescription": "",
-  "version": "",
+  "version": "1.1.0",
   "description": [
     "More information:",
     "",
     "https://www.npmjs.com/package/cordova-plugin-yandex-ads/v/2.2.1",
     "https://partner.yandex.com/ https://partner.yandex.ru/",
+    "https://ads.yandex.com/helpcenter/en/ https://ads.yandex.com/helpcenter/ru/",
     ""
   ],
   "tags": [],
@@ -30,7 +31,42 @@
   ],
   "globalVariables": [
     {
+      "name": "isBannerLoadFailExt",
+      "type": "boolean",
+      "value": false
+    },
+    {
+      "name": "isInterstitialLoadFailExt",
+      "type": "boolean",
+      "value": false
+    },
+    {
+      "name": "isInterstitialDismissedExt",
+      "type": "boolean",
+      "value": false
+    },
+    {
+      "name": "isRewardedLoadFailExt",
+      "type": "boolean",
+      "value": false
+    },
+    {
       "name": "isRewardActivatedExt",
+      "type": "boolean",
+      "value": false
+    },
+    {
+      "name": "isRewardedDismissedExt",
+      "type": "boolean",
+      "value": false
+    },
+    {
+      "name": "isOpenAppAdslDismissedExt",
+      "type": "boolean",
+      "value": false
+    },
+    {
+      "name": "isOpenAppAdsLoadFailExt",
       "type": "boolean",
       "value": false
     }
@@ -171,10 +207,63 @@
       "events": [
         {
           "type": "BuiltinCommonInstructions::JsCode",
-          "inlineCode": "window.YandexAds.loadBanner();",
+          "inlineCode": [
+            "var iblf = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isBannerLoadFailExt\");\r",
+            "iblf.setBoolean(false);\r",
+            "\r",
+            "window.YandexAds.loadBanner();\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.banner.failedToLoad, async () => {\r",
+            "  await iblf.setBoolean(true);\r",
+            "});\r",
+            ""
+          ],
           "parameterObjects": "",
           "useStrict": true,
           "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "is Banner Load Fail",
+      "fullName": "is Banner Load Fail",
+      "functionType": "Condition",
+      "group": "Banner",
+      "name": "isBannerLoadFail",
+      "sentence": "is Banner Load Fail",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isBannerLoadFailExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
         }
       ],
       "parameters": [],
@@ -213,7 +302,16 @@
       "events": [
         {
           "type": "BuiltinCommonInstructions::JsCode",
-          "inlineCode": "window.YandexAds.reloadBanner();",
+          "inlineCode": [
+            "var iblf = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isBannerLoadFailExt\");\r",
+            "iblf.setBoolean(false);\r",
+            "\r",
+            "window.YandexAds.reloadBanner();\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.banner.failedToLoad, async () => {\r",
+            "  await iblf.setBoolean(true);\r",
+            "});"
+          ],
           "parameterObjects": "",
           "useStrict": true,
           "eventsSheetExpanded": false
@@ -251,10 +349,62 @@
       "events": [
         {
           "type": "BuiltinCommonInstructions::JsCode",
-          "inlineCode": "window.YandexAds.loadInterstitial();",
+          "inlineCode": [
+            "var iilf = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isInterstitialLoadFailExt\");\r",
+            "iilf.setBoolean(false);\r",
+            "\r",
+            "window.YandexAds.loadInterstitial();\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.interstitial.failedToLoad, async () => {\r",
+            "  await iilf.setBoolean(true);\r",
+            "});"
+          ],
           "parameterObjects": "",
           "useStrict": true,
           "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "is Interstitial Load Fail",
+      "fullName": "is Interstitial Load Fail",
+      "functionType": "Condition",
+      "group": "Interstitial",
+      "name": "isInterstitialLoadFail",
+      "sentence": "is Interstitial Load Fail",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isInterstitialLoadFailExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
         }
       ],
       "parameters": [],
@@ -271,8 +421,15 @@
         {
           "type": "BuiltinCommonInstructions::JsCode",
           "inlineCode": [
+            "var iid = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isInterstitialDismissedExt\");\r",
+            "iid.setBoolean(false);\r",
+            "\r",
             "window.addEventListener(window.YandexAds.events.interstitial.loaded, async () => {\r",
             "  await window.YandexAds.showInterstitial();\r",
+            "});\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.interstitial.dismissed, async () => {\r",
+            "  await iid.setBoolean(true);\r",
             "});"
           ],
           "parameterObjects": "",
@@ -284,16 +441,68 @@
       "objectGroups": []
     },
     {
+      "description": "is Interstitial Dismissed",
+      "fullName": "is Interstitial Dismissed",
+      "functionType": "Condition",
+      "group": "Interstitial",
+      "name": "isInterstitialDismissed",
+      "sentence": "is Interstitial Dismissed",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isInterstitialDismissedExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
       "description": "Load Rewarded Video",
       "fullName": "Load Rewarded Video",
       "functionType": "Action",
-      "group": "RewardedVideo",
+      "group": "Rewarded Video",
       "name": "LoadRewardedVideo",
       "sentence": "Load Rewarded Video",
       "events": [
         {
           "type": "BuiltinCommonInstructions::JsCode",
-          "inlineCode": "window.YandexAds.loadRewardedVideo();",
+          "inlineCode": [
+            "var irlf = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isRewardedLoadFailExt\");\r",
+            "irlf.setBoolean(false);\r",
+            "\r",
+            "window.YandexAds.loadRewardedVideo();\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.rewarded.failedToLoad, async () => {\r",
+            "  await irlf.setBoolean(true);\r",
+            "});"
+          ],
           "parameterObjects": "",
           "useStrict": true,
           "eventsSheetExpanded": false
@@ -303,10 +512,53 @@
       "objectGroups": []
     },
     {
+      "description": "is Rewarded Video Load Fail",
+      "fullName": "is Rewarded Video Load Fail",
+      "functionType": "Condition",
+      "group": "Rewarded Video",
+      "name": "isRewardedVideoLoadFail",
+      "sentence": "is Rewarded Video Load Fail",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isRewardedLoadFailExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
       "description": "Show Rewarded Video",
       "fullName": "Show Rewarded Video",
       "functionType": "Action",
-      "group": "RewardedVideo",
+      "group": "Rewarded Video",
       "name": "ShowRewardedVideo",
       "sentence": "Show Rewarded Video",
       "events": [
@@ -315,6 +567,8 @@
           "inlineCode": [
             "var ira = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isRewardActivatedExt\");\r",
             "ira.setBoolean(false);\r",
+            "var ird = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isRewardedDismissedExt\");\r",
+            "ird.setBoolean(false);\r",
             "\r",
             "window.addEventListener(window.YandexAds.events.rewarded.loaded, async () => {\r",
             "  await window.YandexAds.showRewardedVideo();\r",
@@ -322,6 +576,9 @@
             "\r",
             "window.addEventListener(window.YandexAds.events.rewarded.rewarded, async () => {\r",
             "  await ira.setBoolean(true);\r",
+            "});\r",
+            "window.addEventListener(window.YandexAds.events.rewarded.dismissed, async () => {\r",
+            "  await ird.setBoolean(true);\r",
             "});\r",
             "\r",
             "\r",
@@ -339,7 +596,7 @@
       "description": "is Reward Activated",
       "fullName": "is Reward Activated",
       "functionType": "Condition",
-      "group": "RewardedVideo",
+      "group": "Rewarded Video",
       "name": "isRewardActivated",
       "sentence": "is Reward Activated",
       "events": [
@@ -379,6 +636,49 @@
       "objectGroups": []
     },
     {
+      "description": "is Rewarded Video Dismissed",
+      "fullName": "is Rewarded Video Dismissed",
+      "functionType": "Condition",
+      "group": "Rewarded Video",
+      "name": "isRewardedVideoDismissed",
+      "sentence": "is Rewarded Video Dismissed",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isRewardedDismissedExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
       "description": "Load app open ads",
       "fullName": "Load app open ads",
       "functionType": "Action",
@@ -388,10 +688,62 @@
       "events": [
         {
           "type": "BuiltinCommonInstructions::JsCode",
-          "inlineCode": "window.YandexAds.loadOpenAppAds();",
+          "inlineCode": [
+            "var ioaalf = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdsLoadFailExt\");\r",
+            "ioaalf.setBoolean(false);\r",
+            "\r",
+            "window.YandexAds.loadOpenAppAds();\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.openAppAds.failedToLoad, async () => {\r",
+            "  await ioaalf.setBoolean(true);\r",
+            "});"
+          ],
           "parameterObjects": "",
           "useStrict": true,
           "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "is OpenAppAds Load Fail",
+      "fullName": "is OpenAppAds Load Fail",
+      "functionType": "Condition",
+      "group": "OpenAppAds",
+      "name": "isOpenAppAdsLoadFail",
+      "sentence": "is OpenAppAds Load Fail",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isOpenAppAdsLoadFailExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
         }
       ],
       "parameters": [],
@@ -408,13 +760,63 @@
         {
           "type": "BuiltinCommonInstructions::JsCode",
           "inlineCode": [
+            "var ioaad = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdslDismissedExt\");\r",
+            "ioaad.setBoolean(false);\r",
+            "\r",
             "window.addEventListener(window.YandexAds.events.openAppAds.loaded, async () => {\r",
             "  await window.YandexAds.showOpenAppAds();\r",
+            "});\r",
+            "\r",
+            "window.addEventListener(window.YandexAds.events.openAppAds.dismissed, async () => {\r",
+            "  await ioaad.setBoolean(true);\r",
             "});"
           ],
           "parameterObjects": "",
           "useStrict": true,
           "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "is OpenAppAds Dismissed",
+      "fullName": "is OpenAppAds Dismissed",
+      "functionType": "Condition",
+      "group": "OpenAppAds",
+      "name": "isOpenAppAdslDismissed",
+      "sentence": "is OpenAppAds Dismissed",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "BooleanVariable"
+              },
+              "parameters": [
+                "isOpenAppAdslDismissedExt",
+                "True",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "BuiltinCommonInstructions::Once"
+              },
+              "parameters": []
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
         }
       ],
       "parameters": [],
