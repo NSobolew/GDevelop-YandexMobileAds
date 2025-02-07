@@ -972,7 +972,7 @@
         {
           "type": "BuiltinCommonInstructions::JsCode",
           "inlineCode": [
-            "var ioaad = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdslDismissedExt\");\r",
+            "var ioaad = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdsDismissedExt\");\r",
             "ioaad.setBoolean(false);\r",
             "var ioaas = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdsShownExt\");\r",
             "ioaas.setBoolean(false);\r",
@@ -1036,7 +1036,7 @@
       "fullName": "is OpenAppAds Dismissed",
       "functionType": "Condition",
       "group": "OpenAppAds",
-      "name": "isOpenAppAdslDismissed",
+      "name": "isOpenAppAdsDismissed",
       "sentence": "is OpenAppAds Dismissed",
       "events": [
         {
@@ -1073,7 +1073,7 @@
       "fullName": "is OpenAppAds Loaded",
       "functionType": "Condition",
       "group": "OpenAppAds",
-      "name": "isOpenAppAdslLoaded",
+      "name": "isOpenAppAdsLoaded",
       "sentence": "is OpenAppAds Loaded",
       "events": [
         {
