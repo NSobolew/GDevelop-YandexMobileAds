@@ -3,16 +3,17 @@
   "category": "Ads",
   "extensionNamespace": "",
   "fullName": "YandexMobileAds",
+  "gdevelopVersion": "",
   "helpPath": "",
   "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0ibWRpLWFscGhhLXktY2lyY2xlIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTksN0wxMSwxM1YxN0gxM1YxM0wxNSw3SDEzTDEyLDEwTDExLDdIOU0xMiwyQTEwLDEwIDAgMCwxIDIyLDEyQTEwLDEwIDAgMCwxIDEyLDIyQTEwLDEwIDAgMCwxIDIsMTJBMTAsMTAgMCAwLDEgMTIsMloiIC8+PC9zdmc+",
   "name": "YandexMobileAds",
   "previewIconUrl": "https://asset-resources.gdevelop.io/public-resources/Icons/d767f43666b22704833086df6ea37c1737e7c53064168c6c8417d1d1dff6e674_alpha-y-circle.svg",
   "shortDescription": "",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": [
     "More information:",
     "",
-    "https://www.npmjs.com/package/cordova-plugin-yandex-ads/v/2.2.1",
+    "https://www.npmjs.com/package/cordova-plugin-yandex-ads/v/3.0.0-1",
     "https://partner.yandex.com/ https://partner.yandex.ru/",
     "https://ads.yandex.com/helpcenter/en/ https://ads.yandex.com/helpcenter/ru/",
     ""
@@ -23,10 +24,10 @@
   ],
   "dependencies": [
     {
-      "exportName": "cordova-plugin-yandex-ads",
+      "exportName": "cordova-plugin-yandex-ads-gdevelop",
       "name": "Cordova Yandex Mobile Ads",
       "type": "cordova",
-      "version": "2.2.1"
+      "version": "1.0.0"
     }
   ],
   "globalVariables": [
@@ -101,7 +102,7 @@
       "value": false
     },
     {
-      "name": "isOpenAppAdslDismissedExt",
+      "name": "isOpenAppAdsDismissedExt",
       "type": "boolean",
       "value": false
     }
@@ -365,7 +366,6 @@
       "functionType": "Action",
       "group": "Banner",
       "name": "reloadBanner",
-      "private": true,
       "sentence": "Reload Banner",
       "events": [
         {
@@ -810,6 +810,22 @@
               "parameters": [
                 "True"
               ]
+            },
+            {
+              "type": {
+                "value": "Wait"
+              },
+              "parameters": [
+                "1"
+              ]
+            },
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "False"
+              ]
             }
           ]
         }
@@ -972,19 +988,20 @@
         {
           "type": "BuiltinCommonInstructions::JsCode",
           "inlineCode": [
-            "var ioaad = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdsDismissedExt\");\r",
-            "ioaad.setBoolean(false);\r",
             "var ioaas = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdsShownExt\");\r",
             "ioaas.setBoolean(false);\r",
+            "var ioaad = runtimeScene.getGame().getVariablesForExtension(\"YandexMobileAds\").get(\"isOpenAppAdsDismissedExt\");\r",
+            "ioaad.setBoolean(false);\r",
             "\r",
             "window.YandexAds.showOpenAppAds();\r",
             "\r",
+            "window.addEventListener(window.YandexAds.events.openAppAds.shown, async () => {\r",
+            "  await ioaas.setBoolean(true);\r",
+            "});\r",
             "window.addEventListener(window.YandexAds.events.openAppAds.dismissed, async () => {\r",
             "  await ioaad.setBoolean(true);\r",
             "});\r",
-            "window.addEventListener(window.YandexAds.events.openAppAds.shown, async () => {\r",
-            "  await ioaas.setBoolean(true);\r",
-            "});"
+            ""
           ],
           "parameterObjects": "",
           "useStrict": true,
@@ -1047,7 +1064,7 @@
                 "value": "BooleanVariable"
               },
               "parameters": [
-                "isOpenAppAdslDismissedExt",
+                "isOpenAppAdsDismissedExt",
                 "True",
                 ""
               ]
