@@ -9,7 +9,7 @@
   "name": "YandexMobileAds",
   "previewIconUrl": "https://asset-resources.gdevelop.io/public-resources/Icons/d767f43666b22704833086df6ea37c1737e7c53064168c6c8417d1d1dff6e674_alpha-y-circle.svg",
   "shortDescription": "",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": [
     "More information:",
     "",
@@ -27,7 +27,7 @@
       "exportName": "cordova-plugin-yandex-ads-gdevelop",
       "name": "Cordova Yandex Mobile Ads",
       "type": "cordova",
-      "version": "1.1.0"
+      "version": "1.1.1"
     }
   ],
   "globalVariables": [
